@@ -10,6 +10,7 @@ from sklearn import svm
 #### Pentru moment vom folosi un CSV de pe net pentru calcularea inferentei cancerului 
 #### (problema identica cu ce vrem sa facem noi):
 cell_df = pd.read_csv("./datasets/cell_samples.csv")
+print(cell_df[0:10]) # Print first ten rows
 
 #### Puteti vedea detalii despre dataset:
 # print(cell_df.head())
