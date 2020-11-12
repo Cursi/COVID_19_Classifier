@@ -411,10 +411,14 @@ classifier.fit(X_train, Y_train)
 # print(classifier.best_params_)
 
 
+print()
 print("Predicting...")
 Y_predicted = classifier.predict(X_test)
 print(classification_report(Y_test, Y_predicted))
+print("Confusion matrix:")
 print(confusion_matrix(Y_test, Y_predicted))
+print()
+print("AUCROC score:")
 print(roc_auc_score(Y_test, Y_predicted))
 
 # df.to_excel("test.xlsx")
