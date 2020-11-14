@@ -4,7 +4,15 @@ const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => 
 {
-    res.send('Dummy server test!')
+    const { spawn } = require('child_process');
+    const pyProg = spawn('py', ['./dummy.py']);
+
+    pyProg.stdout.on('data', function(data) 
+    {
+        console.log(data.toString());
+        res.write(data);
+        res.end();
+    });
 })
 
 app.listen(port, () => 
