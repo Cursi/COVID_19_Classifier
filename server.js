@@ -30,7 +30,7 @@ app.post("/upload", (req, res) =>
             }
             else
             {
-                pyCmd.run(`python dummy.py ./upload/${filename}`).stdout.on('data', function(data) 
+                pyCmd.run(`python dummy.py upload/${filename}`).stdout.on('data', function(data) 
                 {
                     console.log(data.toString());
                     res.write(data);
