@@ -1,4 +1,5 @@
 import re
+import os
 import io
 import sys
 import math
@@ -353,7 +354,7 @@ def SplitDataframe():
 def LoadModel():
 	global classifier
 
-	modelFile = open('ML\classifier.model','rb')
+	modelFile = open(os.getcwd() + '\ML\classifier.model','rb')
 	classifier = pickle.load(modelFile)
 	modelFile.close()
 

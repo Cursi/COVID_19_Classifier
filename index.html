@@ -48,7 +48,7 @@
                                     if(data.status == 200 && data.output === "PROCESSING")
                                     {
                                         isProcessing = true;
-                                        $("#infoContainer").text("Sit back and relax, it's processing...");
+                                        $("#infoContainer").text("Sit back and relax, it's processing...👨‍💻");
                                     }
                                 }
                             });
@@ -86,7 +86,7 @@
                                 $("#infoContainer").text(data.output);
                             }
                             else
-                                $("#infoContainer").text("Couldn't process this file. Try another!");
+                                $("#infoContainer").text("Couldn't process this file. Try another! 🤷‍♀️");
 
                             isProcessing = false;
                         }
@@ -114,6 +114,7 @@
             font-size: 2.5em;
             color: rgba(255, 255, 255, 0.8);
             letter-spacing: 1px;
+            text-align: center;
         }
     </style>
 </head>
