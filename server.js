@@ -5,7 +5,7 @@ const port = process.env.PORT || 3000
 app.get('/', (req, res) => 
 {
     const { spawn } = require('child_process');
-    const pyProg = spawn('py', ['./dummy.py']);
+    const pyProg = spawn('python', ['./dummy.py']);
 
     pyProg.stdout.on('data', function(data) 
     {
