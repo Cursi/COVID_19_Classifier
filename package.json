@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Cursi/COVID_19_Classifier/issues"
   },
-  "homepage": "https://github.com/Cursi/COVID_19_Classifier#readme"
+  "homepage": "https://github.com/Cursi/COVID_19_Classifier#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
