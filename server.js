@@ -37,7 +37,7 @@ app.post("/upload", (req, res) =>
     {
         console.log(req.body.fileName);
 
-        var pyshell = new PS.PythonShell(`${__dirname}/ML/classifier.py`);
+        var pyshell = new PS.PythonShell("classifier.py");
         pyshell.send(req.body.content);
 
         let waitResponse = { status: 200, output: "PROCESSING"}
