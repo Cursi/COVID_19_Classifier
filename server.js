@@ -21,7 +21,7 @@ app.post("/upload", (req, res) =>
         let file = req.files.dataset;
         let filename = file.name;
 
-        file.mv("./upload/" + filename, (err) =>
+        file.mv(`${__dirname}/upload/${filename}`, (err) =>
         {
             if(err)
             {
