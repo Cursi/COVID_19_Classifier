@@ -20,6 +20,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-fileupload": "^1.2.0",
-    "node-cmd": "^4.0.0"
+    "node-cmd": "^4.0.0",
+    "python-shell": "^2.0.2"
   }
 }

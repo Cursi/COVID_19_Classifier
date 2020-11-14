@@ -6,6 +6,7 @@ const fileUpload = require('express-fileupload');
 app.use(fileUpload());
 
 const pyCmd = require("node-cmd");
+const PS = require('python-shell');
 
 app.get('/', (req, res) => 
 {
@@ -21,23 +22,52 @@ app.post("/upload", (req, res) =>
         let file = req.files.dataset;
         let filename = file.name;
 
-        file.mv(`${__dirname}/upload/${filename}`, (err) =>
+        // console.log(Buffer.from(file.data).toString("base64"));
+
+        var pyshell = new PS.PythonShell('cursi.py');
+        pyshell.send(Buffer.from(file.data).toString("base64"));
+
+        var pyOutput;
+
+        pyshell.stderr.on('data', function(data)
         {
-            if(err)
-            {
-                console.log(err);
-                res.send("Eroare boss");
-            }
-            else
-            {
-                pyCmd.run(`python dummy.py ${__dirname}/upload/${filename}`).stdout.on('data', function(data) 
-                {
-                    console.log(data.toString());
-                    res.write(data);
-                    res.end();
-                });
-            }
+            res.write("Fisier invalid!")
+            res.end()
+        })
+
+        pyshell.stdout.on('data', function(data) 
+        {
+            console.log(data.toString());
+            res.write(data);
+            res.end();
         });
+
+        // // end the input stream and allow the process to exit
+        // pyshell.end(function (err,code,signal) 
+        // {
+        //     if (err) throw err;
+        //     console.log('The exit code was: ' + code);
+        //     console.log('The exit signal was: ' + signal);
+        //     console.log('finished');
+        // });
+
+        // file.mv(`${__dirname}/upload/${filename}`, (err) =>
+        // {
+        //     if(err)
+        //     {
+        //         console.log(err);
+        //         res.send("Eroare boss");
+        //     }
+        //     else
+        //     {
+        //         pyCmd.run(`python dummy.py ${__dirname}/upload/${filename}`).stdout.on('data', function(data) 
+        //         {
+        //             console.log(data.toString());
+        //             res.write(data);
+        //             res.end();
+        //         });
+        //     }
+        // });
     }
 });
 
