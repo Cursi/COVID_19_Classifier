@@ -20,7 +20,8 @@ app.post("/upload", (req, res) =>
 {
     console.log(req.body.fileName);
 
-    var pyshell = new PS.PythonShell('cursi.py');
+    // var pyshell = new PS.PythonShell('cursi.py');
+    var pyshell = new PS.PythonShell('encoding.py');
     pyshell.send(req.body.content);
 
     pyshell.stdout.on('data', function(data) 
