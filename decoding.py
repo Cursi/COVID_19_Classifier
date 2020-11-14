@@ -1,8 +1,9 @@
 import io
 import base64
 import pandas as pd
+import sklearn as sk
 
-print(pd.__version__)
+# print(p.__version__)
 
 # base64_dataset = input()
 # decrypted_dataset = base64.b64decode(base64_dataset)

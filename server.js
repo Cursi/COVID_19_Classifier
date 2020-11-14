@@ -34,15 +34,6 @@ app.post("/upload", (req, res) =>
             res.end();
         });
 
-        // // end the input stream and allow the process to exit
-        // pyshell.end(function (err,code,signal) 
-        // {
-        //     if (err) throw err;
-        //     console.log('The exit code was: ' + code);
-        //     console.log('The exit signal was: ' + signal);
-        //     console.log('finished');
-        // });
-
         // file.mv(`${__dirname}/upload/${filename}`, (err) =>
         // {
         //     if(err)
