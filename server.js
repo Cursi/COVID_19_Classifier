@@ -24,20 +24,15 @@ app.post("/upload", (req, res) =>
 
         // console.log(Buffer.from(file.data).toString("base64"));
 
-        res.write(Buffer.from(file.data).toString("base64"));
-        res.end();
+        var pyshell = new PS.PythonShell('cursi.py');
+        pyshell.send(Buffer.from(file.data).toString("base64"));
 
-        // var pyshell = new PS.PythonShell('cursi.py');
-        // pyshell.send(Buffer.from(file.data).toString("base64"));
-
-        // var pyOutput;
-
-        // pyshell.stdout.on('data', function(data) 
-        // {
-        //     console.log(data.toString());
-        //     res.write(data);
-        //     res.end();
-        // });
+        pyshell.stdout.on('data', function(data) 
+        {
+            console.log(data.toString());
+            res.write(data);
+            res.end();
+        });
 
         // // end the input stream and allow the process to exit
         // pyshell.end(function (err,code,signal) 
