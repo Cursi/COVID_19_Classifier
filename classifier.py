@@ -134,17 +134,17 @@ def ReadBase64Excel():
 
 	if len(sys.argv) == 3:
 		try:
-			# if sys.argv[1] == "1":
-			# 	base64_dataset = input()
-			# 	decrypted_dataset = base64.b64decode(base64_dataset)
+			if sys.argv[1] == "1":
+				base64_dataset = input()
+				decrypted_dataset = base64.b64decode(base64_dataset)
 
-			# 	memoryBuffer = io.BytesIO()
-			# 	memoryBuffer.write(decrypted_dataset)
-			# 	memoryBuffer.seek(0)
+				memoryBuffer = io.BytesIO()
+				memoryBuffer.write(decrypted_dataset)
+				memoryBuffer.seek(0)
 				
-			# 	fileName = sys.argv[2]
-			# 	df = pd.read_excel(memoryBuffer)
-			# elif sys.argv[1] == "0":
+				fileName = sys.argv[2]
+				df = pd.read_excel(memoryBuffer)
+			elif sys.argv[1] == "0":
 				df = pd.read_excel(sys.argv[2])
 		except:
 			print("PROCESSING_ERROR")
@@ -386,7 +386,7 @@ def PrintPredictionMetrics():
 	elif sys.argv[1] == "1":
 		jsonObject = {
 			"accuracy": accuracy_score(Y_test, Y_predicted),
-			"aucruc": roc_auc_score(Y_test, Y_predicted),
+			"aucroc": roc_auc_score(Y_test, Y_predicted),
 			"precision": precision_score(Y_test, Y_predicted, average=None),
 			"recall": recall_score(Y_test, Y_predicted, average=None),
 			"f1": f1_score(Y_test, Y_predicted, average=None),
