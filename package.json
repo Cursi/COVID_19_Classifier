@@ -19,7 +19,6 @@
   "homepage": "https://github.com/Cursi/COVID_19_Classifier#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "node-cmd": "^4.0.0",
-    "python-shell": "^2.0.2"
+    "node-cmd": "^4.0.0"
   }
 }
