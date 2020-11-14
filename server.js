@@ -5,7 +5,8 @@ const port = process.env.PORT || 3000
 app.get('/', (req, res) => 
 {
     const { spawn } = require('child_process');
-    const pyProg = spawn('python', ['./dummy.py']);
+    // const pyProg = spawn('python', ['./dummy.py']);
+    const pyProg = spawn('heroku', ['run', 'python', './dummy.py']);
 
     pyProg.stdout.on('data', function(data) 
     {
