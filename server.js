@@ -26,7 +26,7 @@ app.post("/upload", (req, res) =>
             if(err)
             {
                 console.log(err);
-                res.send(err);
+                res.send("Eroare boss");
             }
             else
             {
