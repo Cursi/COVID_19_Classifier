@@ -16,24 +16,43 @@ app.get('/', (req, res) =>
     res.sendFile(__dirname + "/index.html");
 })
 
+var pyOutput = null;
+
 app.post("/upload", (req, res) =>
 {
-    console.log(req.body.fileName);
-
-    // var pyshell = new PS.PythonShell('cursi.py');
-    var pyshell = new PS.PythonShell('encoding.py');
-    pyshell.send(req.body.content);
-
-    pyshell.stdout.on('data', function(data) 
+    if(req.body.message)
     {
-        let response = { status: 200, output: data};
+        if(pyOutput != null)
+        {
+            let response = { status: 200, output: pyOutput};
 
-        if(data.includes("PROCESSING_ERROR"))
-            response.status = 400;
+            if(pyOutput.includes("PROCESSING_ERROR"))
+                response.status = 400;
 
-        res.write(JSON.stringify(response));
+            res.write(JSON.stringify(response));
+            pyOutput = null;
+            res.end();
+        }
+        else
+            res.end();
+    }
+    else if(req.body.fileName)
+    {
+        console.log(req.body.fileName);
+
+        // var pyshell = new PS.PythonShell('cursi.py');
+        var pyshell = new PS.PythonShell('encoding.py');
+        pyshell.send(req.body.content);
+
+        let waitResponse = { status: 200, output: "PROCESSING"}
+        res.write(JSON.stringify(waitResponse));
         res.end();
-    });
+
+        pyshell.stdout.on('data', function(data) 
+        {
+            pyOutput = data;
+        });
+    }
 
     // console.log(req.files);
 
