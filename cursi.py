@@ -100,20 +100,21 @@ pd.options.mode.chained_assignment = None  # default='warn'
 # np.set_printoptions(threshold=sys.maxsize)
 
 #### Citesc datele
-# df = pd.read_excel(sys.argv[1])
-import io
-import base64
+df = pd.read_excel(sys.argv[1])
 
-try:
-	base64_dataset = input()
-	decrypted_dataset = base64.b64decode(base64_dataset)
-	toread = io.BytesIO()
-	toread.write(decrypted_dataset)  # pass your `decrypted` string as the argument here
-	toread.seek(0)  # reset the pointer
-	df = pd.read_excel(toread)  # now read to dataframe
-except:
-	print("PROCESSING_ERROR")
-	exit()
+# import io
+# import base64
+
+# try:
+# 	base64_dataset = input()
+# 	decrypted_dataset = base64.b64decode(base64_dataset)
+# 	toread = io.BytesIO()
+# 	toread.write(decrypted_dataset)  # pass your `decrypted` string as the argument here
+# 	toread.seek(0)  # reset the pointer
+# 	df = pd.read_excel(toread)  # now read to dataframe
+# except:
+# 	print("PROCESSING_ERROR")
+# 	exit()
 
 # print(df.shape)
 # print(df.isna().sum())
@@ -406,7 +407,7 @@ Y = np.asarray(df_upsampled['rezultat testare']) # Aci am rezultatul real cu car
 # classifier = AdaBoostClassifier(random_state=0)
 # classifier = RandomForestClassifier(random_state=0, n_estimators=10)
 # classifier = MLPClassifier(max_iter=2000)
-classifier = AdaBoostClassifier(RandomForestClassifier(random_state=4, n_estimators=10, criterion="entropy"), random_state=4)
+# classifier = AdaBoostClassifier(RandomForestClassifier(random_state=4, n_estimators=10, criterion="entropy"), random_state=4)
 # classifier = QuadraticDiscriminantAnalysis()
 
 # param_grid = { 
@@ -419,10 +420,15 @@ classifier = AdaBoostClassifier(RandomForestClassifier(random_state=4, n_estimat
 # rfc=RandomForestClassifier(random_state=4)
 # classifier = GridSearchCV(estimator=rfc, param_grid=param_grid, cv= 5)
 # classifier = RandomForestClassifier(random_state=4, n_estimators=10, criterion="entropy")
-classifier.fit(X_train, Y_train)
-
 # print(classifier.best_params_)
 
+# classifier = AdaBoostClassifier(RandomForestClassifier(random_state=4, n_estimators=10, criterion="entropy"), random_state=4)
+# classifier.fit(X_train, Y_train)
+
+import pickle
+var = open('classifier.model','rb')
+classifier = pickle.load(var)
+var.close()
 
 print()
 print("Predicting...")
