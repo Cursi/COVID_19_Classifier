@@ -24,16 +24,10 @@ app.post("/upload", (req, res) =>
 
         // console.log(Buffer.from(file.data).toString("base64"));
 
-        var pyshell = new PS.PythonShell('cursi.py');
+        var pyshell = new PS.PythonShell(__dirname + '/cursi.py');
         pyshell.send(Buffer.from(file.data).toString("base64"));
 
         var pyOutput;
-
-        pyshell.stderr.on('data', function(data)
-        {
-            res.write("Fisier invalid!")
-            res.end()
-        })
 
         pyshell.stdout.on('data', function(data) 
         {
