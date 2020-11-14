@@ -9,7 +9,7 @@ const PS = require('python-shell');
 
 app.get('/', (req, res) => 
 {
-    res.sendFile(__dirname + "/index.html");
+    res.sendFile(`${__dirname}/index.html`);
 })
 
 var pyOutput = null;
@@ -35,9 +35,7 @@ app.post("/upload", (req, res) =>
     // TODO: De trimis numele fisierului ca parametru
     else if(req.body.fileName)
     {
-        console.log(req.body.fileName);
-
-        var pyshell = new PS.PythonShell("classifier.py");
+        var pyshell = new PS.PythonShell("classifier.py", { args: ["1", req.body.fileName ] });
         pyshell.send(req.body.content);
 
         let waitResponse = { status: 200, output: "PROCESSING"}

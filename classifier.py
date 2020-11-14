@@ -3,6 +3,7 @@ import os
 import io
 import sys
 import math
+import json
 import base64
 import pickle
 import numpy as np
@@ -11,11 +12,18 @@ import pandas as pd
 from sklearn.utils import resample
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score, precision_score, f1_score, recall_score
 
 from datetime import datetime
 from dateutil.parser import parse
 
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return json.JSONEncoder.default(self, obj)
+
+fileName = None
 df = None
 
 istoric = ["daistoric", "nuistoric", "missingistoric"]
@@ -122,21 +130,25 @@ def SetPandasCustomizations():
 	pd.options.mode.chained_assignment = None
 
 def ReadBase64Excel():
-	global df
+	global df, fileName
 
-	try:
-		base64_dataset = input()
-		decrypted_dataset = base64.b64decode(base64_dataset)
+	if len(sys.argv) == 3:
+		try:
+			# if sys.argv[1] == "1":
+			# 	base64_dataset = input()
+			# 	decrypted_dataset = base64.b64decode(base64_dataset)
 
-		memoryBuffer = io.BytesIO()
-		memoryBuffer.write(decrypted_dataset)
-		memoryBuffer.seek(0)
-		
-		df = pd.read_excel(memoryBuffer)
-		# df = pd.read_excel(sys.argv[1])
-	except:
-		print("PROCESSING_ERROR")
-		exit()
+			# 	memoryBuffer = io.BytesIO()
+			# 	memoryBuffer.write(decrypted_dataset)
+			# 	memoryBuffer.seek(0)
+				
+			# 	fileName = sys.argv[2]
+			# 	df = pd.read_excel(memoryBuffer)
+			# elif sys.argv[1] == "0":
+				df = pd.read_excel(sys.argv[2])
+		except:
+			print("PROCESSING_ERROR")
+			exit()
 	
 def EncodeXColumns():
 	global df
@@ -342,11 +354,14 @@ def SelectFeatures():
 def SplitDataframe():
 	global X_train, X_test, Y_train, Y_test, df_upsampled
 
-	X = np.asarray(df_upsampled[featuresDF]) # Pe astea vreau sa le folosesc sa fac predictia clasei (cancerigen sau nu) - variabile INDEPENDENTE
-	Y = np.asarray(df_upsampled['rezultat testare']) # Aci am rezultatul real cu care voi putea sa compar - variabile DEPENDENTE
+	if sys.argv[1] == "0":
+		X = np.asarray(df_upsampled[featuresDF])
+		Y = np.asarray(df_upsampled['rezultat testare'])
 
-	(X_train, X_test, Y_train, Y_test) = train_test_split(X, Y, test_size=0.2, random_state=4)
-
+		(X_train, X_test, Y_train, Y_test) = train_test_split(X, Y, test_size=0.2, random_state=4)
+	elif sys.argv[1] == "1":
+		X_test = np.asarray(df[featuresDF])
+		Y_test = np.asarray(df['rezultat testare'])
 	# X = np.asarray(pd.read_excel("X.xlsx"))
 	# Y = np.asarray(pd.read_excel("Y.xlsx"))
 	# (X_train, X_test, Y_train, Y_test) = train_test_split(X, Y, test_size=0.2, random_state=4)
@@ -360,13 +375,27 @@ def LoadModel():
 
 def PrintPredictionMetrics():
 	Y_predicted = classifier.predict(X_test)
-	print(classification_report(Y_test, Y_predicted))
-	# print("Confusion matrix:")
-	# print(confusion_matrix(Y_test, Y_predicted))
-	# print()
-	# print("AUCROC score:")
-	# print(roc_auc_score(Y_test, Y_predicted))
+	
+	if sys.argv[1] == "0":
+		print(classification_report(Y_test, Y_predicted))
+		print("Confusion matrix:")
+		print(confusion_matrix(Y_test, Y_predicted))
+		print()
+		print("AUCROC score:")
+		print(roc_auc_score(Y_test, Y_predicted))
+	elif sys.argv[1] == "1":
+		jsonObject = {
+			"accuracy": accuracy_score(Y_test, Y_predicted),
+			"aucruc": roc_auc_score(Y_test, Y_predicted),
+			"precision": precision_score(Y_test, Y_predicted, average=None),
+			"recall": recall_score(Y_test, Y_predicted, average=None),
+			"f1": f1_score(Y_test, Y_predicted, average=None),
+			"confusion_matrix": confusion_matrix(Y_test, Y_predicted)
+		}
 
+		jsonString = json.dumps(jsonObject, cls=NumpyEncoder)
+		print(jsonString)
+	
 if __name__ == "__main__":
 	SetPandasCustomizations()
 	ReadBase64Excel()
