@@ -112,7 +112,7 @@ try:
 	toread.seek(0)  # reset the pointer
 	df = pd.read_excel(toread)  # now read to dataframe
 except:
-	print("ERR")
+	print("PROCESSING_ERROR")
 	exit()
 
 # print(df.shape)

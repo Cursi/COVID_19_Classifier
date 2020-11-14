@@ -2,8 +2,11 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 
-const fileUpload = require('express-fileupload');
-app.use(fileUpload());
+// const fileUpload = require('express-fileupload');
+// app.use(fileUpload());
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.json({ limit: '50mb' }));
 
 const pyCmd = require("node-cmd");
 const PS = require('python-shell');
@@ -15,24 +18,40 @@ app.get('/', (req, res) =>
 
 app.post("/upload", (req, res) =>
 {
-    console.log(req.files);
+    console.log(req.body.fileName);
 
-    if(req.files)
+    var pyshell = new PS.PythonShell('cursi.py');
+    pyshell.send(req.body.content);
+
+    pyshell.stdout.on('data', function(data) 
     {
-        let file = req.files.dataset;
-        let filename = file.name;
+        let response = { status: 200, output: data};
 
-        // console.log(Buffer.from(file.data).toString("base64"));
+        if(data.includes("PROCESSING_ERROR"))
+            response.status = 400;
 
-        var pyshell = new PS.PythonShell('cursi.py');
-        pyshell.send(Buffer.from(file.data).toString("base64"));
+        res.write(JSON.stringify(response));
+        res.end();
+    });
 
-        pyshell.stdout.on('data', function(data) 
-        {
-            console.log(data.toString());
-            res.write(data);
-            res.end();
-        });
+    // console.log(req.files);
+
+    // if(req.files)
+    // {
+    //     let file = req.files.dataset;
+    //     let filename = file.name;
+
+    //     // console.log(Buffer.from(file.data).toString("base64"));
+
+    //     var pyshell = new PS.PythonShell('cursi.py');
+    //     pyshell.send(Buffer.from(file.data).toString("base64"));
+
+    //     pyshell.stdout.on('data', function(data) 
+    //     {
+    //         console.log(data.toString());
+    //         res.write(data);
+    //         res.end();
+    //     });
 
         // file.mv(`${__dirname}/upload/${filename}`, (err) =>
         // {
@@ -51,7 +70,7 @@ app.post("/upload", (req, res) =>
         //         });
         //     }
         // });
-    }
+    // }
 });
 
 app.listen(port, () => 
