@@ -395,6 +395,7 @@ except:
 # df_upsampled['rezultat testare'].to_excel("Y.xlsx", index=False)
 
 X = np.asarray(pd.read_excel("X.xlsx"))
+print(X.shape)
 Y = np.asarray(pd.read_excel("Y.xlsx"))
 (X_train, X_test, Y_train, Y_test) = train_test_split(X, Y, test_size=0.2, random_state=4)
 
@@ -431,19 +432,19 @@ Y = np.asarray(pd.read_excel("Y.xlsx"))
 # classifier = AdaBoostClassifier(RandomForestClassifier(random_state=4, n_estimators=10, criterion="entropy"), random_state=4)
 # classifier.fit(X_train, Y_train)
 
-print()
-print("Predicting...")
-import pickle
-var = open('classifier.model','rb')
-classifier = pickle.load(var)
-var.close()
+# print()
+# print("Predicting...")
+# import pickle
+# var = open('classifier.model','rb')
+# classifier = pickle.load(var)
+# var.close()
 
-Y_predicted = classifier.predict(X_test)
-print(classification_report(Y_test, Y_predicted))
-print("Confusion matrix:")
-print(confusion_matrix(Y_test, Y_predicted))
-print()
-print("AUCROC score:")
-print(roc_auc_score(Y_test, Y_predicted))
+# Y_predicted = classifier.predict(X_test)
+# print(classification_report(Y_test, Y_predicted))
+# print("Confusion matrix:")
+# print(confusion_matrix(Y_test, Y_predicted))
+# print()
+# print("AUCROC score:")
+# print(roc_auc_score(Y_test, Y_predicted))
 
 # df.to_excel("test.xlsx")
