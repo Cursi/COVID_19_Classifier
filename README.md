@@ -4,7 +4,7 @@
 This is a SKLearn project for an university homework whose purpose was to <strong>classify</strong> with a high accuracy based on a small dataset whether a person could have the <strong>COVID19</strong> disease or not. 
 
 ### Demo
-Drag and drop any test dataset respecting <strong>mps.dataset.xlsx</strong> column structure <a href="https://mps-covid-19-backend.herokuapp.com/"><strong>here</strong></a> and wait :)
+Drag and drop any test dataset (respecting <strong>mps.dataset.xlsx</strong> column structure) <a href="https://mps-covid-19-backend.herokuapp.com/"><strong>here</strong></a> and wait :)
 
 ### Local training & test
 <strong>python classifier.py 0 mps.dataset.xlsx</strong><br><br>
