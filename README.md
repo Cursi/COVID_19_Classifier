@@ -78,3 +78,10 @@ An around 99% for both is a very good result considering the human errors and mi
 ### Possible improvements
 - Encoding in a useful manner the 3 unused columns mentioned in step 1.
 - Grouping and encoding better the columns containing pacient symptoms. (The current solution only improves the accuracy by 1%)
+
+### Demo environment flow
+For the demo I used Heroku. <br><br>
+Due to its ephemeral file system no files can be directly stored, so the input file received when dragging effect is triggered in front end is converted to base64 and passed to a nodeJS server. <br><br>
+The nodeJS server passes it further as input to the classifier.py, using argument 1, knowing that it is coming from the node server as a demo, so it will load the model directly instead of training and testing for development purposes. <br><br>
+Due to Heroku 30s response limitations I decided to run the prediction in background and poll at 1 second from the frontend for the results. When they are ready, the nodeJS server returns them in a json format passed back from the python script.<br><br>
+The json response is parsed and displayed nicely in the frontend.
