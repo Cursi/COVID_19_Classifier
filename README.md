@@ -56,11 +56,9 @@ On top of RFC we use an AdaBoostClassifier to help us more tweak other internal 
            1       0.98      1.00      0.99       529
 
     accuracy                           0.99      1046
-
-Confusion matrix:
-[[504  13]
- [  0 529]]
-
-AUCROC score:
-0.9874274661508704
+    
+    Confusion matrix:
+    [[504  13]
+    [  0 529]]
+    AUCROC score: 0.9874274661508704
 
