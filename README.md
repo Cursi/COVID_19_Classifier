@@ -8,7 +8,7 @@ Drag and drop any test dataset respecting <strong>mps.dataset.xlsx</strong> colu
 
 ### Local training & test
 <strong>python classifier.py 0 mps.dataset.xlsx</strong><br><br>
-Be sure to lower the n_estimators param from 1000 to 10 in order to achieve results in seconds.
+Be sure to lower the n_estimators to 10 in order to achieve results in seconds or higher it to 1000 or more (if your machine can handle) for better results, but longer fitting time.
 
 ### Dependencies
 python 3.6 or higher
