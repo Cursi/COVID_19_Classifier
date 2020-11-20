@@ -62,3 +62,19 @@ On top of RFC we use an AdaBoostClassifier to help us more tweak other internal 
     [  0 529]]
     AUCROC score: 0.9874274661508704
 
+### Metrics goal
+We focused on maximizing the accuracy and AUCROC score <strong>at the same time</strong>.
+An around 99% for both is a very good result considering the human errors and missing data.
+
+### Metrics interpretation
+- Accuracy = the number of well predicted cases
+- Precision = the number of well predicted positive (or negative) cases out of the total number of positive (or negative) predicted cases.
+- Recall = the number of well predicted positive (or negative) cases out of the total number of positive (or negative) cases.
+- F1 score = harmonic mean between precision & recall.
+- Confusion matrix = [[True positives, False positives], [False negatives, True negative]]
+- AUCROC curve = a performance measurement for the classification problems at various threshold settings. ROC is a probability curve, and AUC represents the degree or measure of separability. So...AUCROC score tells how much model is capable of distinguishing between classes.
+
+
+### Possible improvements
+- Encoding in a useful manner the 3 unused columns mentioned in step 1.
+- Grouping and encoding better the columns containing pacient symptoms. (The current solution only improves the accuracy by 1%)
