@@ -29,9 +29,9 @@ Can be found in <strong>requirements.txt</strong>
 #### 2. Columns manipulation & encoding
 - All strings were lowered.
 - Everything was encoded in numerical values.
-- For column "instituția sursă", the three values [missing, x, y, z] were encoded [0, 1, 2, 3].
+- For column "instituția sursă", the three values [x, y, z] were encoded [1, 2, 3] and invalid values with 0.
 - For column "vârstă" all values were converted to numeric and all invalid values were converted to 0.
-- The column "sex" was encoded with [1, 2].
+- The column "sex" was encoded with [1, 2] and invalid values with 0.
 - For each of the columns "data rezultat testare", "dată internare" and "dată debut simptome declarate",
 	we created 3 more columns and extracted the day, the month and the day within a week time, as integers.
 - For column "rezultat testare", the results were encoded with 1 or 2. (Just for the beauty of encoding, not needed since it's the object we classify)
