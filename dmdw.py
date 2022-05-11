@@ -320,12 +320,15 @@ def PrintPredictionMetrics():
 def CreateMultipleModels():
     for currentModelParams in classifierParams:
         for currentSplit in splitParams:
-            print("\n estimators: {}, depth: {}, {:.0f}% data for testing with a random state of {}".format(
+            print("\nestimators: {}, depth: {}, {:.0f}% data for testing with a random state of {}".format(
                 *currentModelParams, currentSplit[0] * 100, currentSplit[1]))
             SplitDataframe(*currentSplit)
             TrainModel(*currentModelParams)
 
             PrintPredictionMetrics()
+
+            if currentModelParams == (1000, 10):
+                break
 
 
 if __name__ == "__main__":
