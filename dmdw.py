@@ -305,14 +305,6 @@ def TrainModel(n_estimators, max_depth):
     classifier.fit(X_train, Y_train)
 
 
-def LoadModel():
-    global classifier
-
-    modelFile = open('adaBoostedRFC_10Estimators.model', 'rb')
-    classifier = pickle.load(modelFile)
-    modelFile.close()
-
-
 def PrintPredictionMetrics():
     print("Getting the results...")
     Y_predicted = classifier.predict(X_test)
